@@ -2,7 +2,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { 
-  Mail, FileText, Database, Settings, ClipboardList, BarChart3
+  Mail, FileText, Database, Settings, ClipboardList, BarChart3,
+  User // Added User import from Lucide
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
