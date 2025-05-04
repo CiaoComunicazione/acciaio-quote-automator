@@ -14,6 +14,8 @@ import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
 import Unauthorized from "@/pages/Unauthorized";
 import NotFound from "@/pages/NotFound";
+import Database from "@/pages/Database";
+import Settings from "@/pages/Settings";
 
 const queryClient = new QueryClient();
 
@@ -34,7 +36,16 @@ const App = () => (
                     <Dashboard />
                   </ProtectedRoute>
                 } />
-                {/* Add additional protected routes here */}
+                <Route path="/database" element={
+                  <ProtectedRoute>
+                    <Database />
+                  </ProtectedRoute>
+                } />
+                <Route path="/settings" element={
+                  <ProtectedRoute>
+                    <Settings />
+                  </ProtectedRoute>
+                } />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Layout>
