@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -24,6 +25,18 @@ export default {
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+				steel: {
+					50: '#F5F7FA',
+					100: '#E4E7EB',
+					200: '#CBD2D9',
+					300: '#9AA5B1',
+					400: '#7B8794',
+					500: '#616E7C',
+					600: '#52606D',
+					700: '#3E4C59',
+					800: '#323F4B',
+					900: '#1A365D',
+				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
@@ -89,6 +102,9 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out'
+			},
+			fontFamily: {
+				sans: ['Inter', 'sans-serif'],
 			}
 		}
 	},
