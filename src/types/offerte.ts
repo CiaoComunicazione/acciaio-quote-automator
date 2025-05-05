@@ -1,4 +1,5 @@
 
+
 export type OfferStatus = 'RICEVUTA' | 'IN_LAVORAZIONE' | 'INVIATA' | 'CONFERMATA' | 'SCADUTA';
 
 export interface Prodotto {
@@ -17,6 +18,7 @@ export interface Fornitore {
   dataRisposta?: string;
   stato: 'INVIATO' | 'RISPOSTO' | 'BLOCCATO' | 'SCADUTO';
   blocked: boolean;
+  blockNewRequest?: boolean;
   prodotti: Prodotto[];
   costoSpedizione?: number;
   tempiConsegna?: string;
@@ -42,3 +44,4 @@ export interface Offerta {
     dataConsegna: string;
   };
 }
+

@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { it } from 'date-fns/locale';
-import { ArrowLeft, Eye, PauseCircle, PlayCircle } from 'lucide-react';
+import { ArrowLeft, Eye, PauseCircle, PlayCircle, Edit, RefreshCw } from 'lucide-react';
 import { Offerta, Fornitore } from '@/types/offerte';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -21,8 +21,11 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Badge } from '@/components/ui/badge';
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 interface OffertaDetailProps {
   offerta: Offerta;
@@ -34,6 +37,51 @@ export const OffertaDetail = ({ offerta, onBack, onToggleBlockSupplier }: Offert
   const [viewRfqDialog, setViewRfqDialog] = useState<{ open: boolean; fornitore?: Fornitore }>({
     open: false,
   });
+  
+  const [blockDialog, setBlockDialog] = useState<{ 
+    open: boolean; 
+    fornitore?: Fornitore; 
+    blockNewRequest: boolean; 
+  }>({
+    open: false,
+    blockNewRequest: false,
+  });
+  
+  const [unblockDialog, setUnblockDialog] = useState<{ 
+    open: boolean; 
+    fornitore?: Fornitore; 
+  }>({
+    open: false,
+  });
+
+  const handleBlockSupplier = (fornitore: Fornitore) => {
+    setBlockDialog({
+      open: true,
+      fornitore,
+      blockNewRequest: fornitore.blockNewRequest || false
+    });
+  };
+
+  const handleUnblockSupplier = (fornitore: Fornitore) => {
+    setUnblockDialog({
+      open: true,
+      fornitore
+    });
+  };
+
+  const confirmBlockSupplier = () => {
+    if (blockDialog.fornitore) {
+      onToggleBlockSupplier(blockDialog.fornitore.id);
+      setBlockDialog({ open: false, blockNewRequest: false });
+    }
+  };
+
+  const confirmUnblockSupplier = () => {
+    if (unblockDialog.fornitore) {
+      onToggleBlockSupplier(unblockDialog.fornitore.id);
+      setUnblockDialog({ open: false });
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -188,7 +236,7 @@ export const OffertaDetail = ({ offerta, onBack, onToggleBlockSupplier }: Offert
                             </Badge>
                           </TableCell>
                           <TableCell>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 flex-wrap">
                               {(fornitore.stato === 'RISPOSTO' || fornitore.dataRisposta) && (
                                 <Button
                                   variant="outline"
@@ -201,23 +249,40 @@ export const OffertaDetail = ({ offerta, onBack, onToggleBlockSupplier }: Offert
                               )}
                               
                               {(fornitore.stato === 'INVIATO' || fornitore.stato === 'BLOCCATO') && (
-                                <Button
-                                  variant={fornitore.blocked ? "default" : "outline"}
-                                  size="sm"
-                                  onClick={() => onToggleBlockSupplier(fornitore.id)}
-                                >
-                                  {fornitore.blocked ? (
-                                    <>
-                                      <PlayCircle className="h-4 w-4 mr-1" />
-                                      Riattiva sollecito
-                                    </>
-                                  ) : (
-                                    <>
-                                      <PauseCircle className="h-4 w-4 mr-1" />
-                                      Ferma sollecito
-                                    </>
-                                  )}
-                                </Button>
+                                <>
+                                  <Button
+                                    variant={fornitore.blocked ? "default" : "outline"}
+                                    size="sm"
+                                    onClick={() => 
+                                      fornitore.blocked 
+                                        ? handleUnblockSupplier(fornitore)
+                                        : handleBlockSupplier(fornitore)
+                                    }
+                                  >
+                                    {fornitore.blocked ? (
+                                      <>
+                                        <PlayCircle className="h-4 w-4 mr-1" />
+                                        Riattiva sollecito
+                                      </>
+                                    ) : (
+                                      <>
+                                        <PauseCircle className="h-4 w-4 mr-1" />
+                                        Ferma sollecito
+                                      </>
+                                    )}
+                                  </Button>
+                                  
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    asChild
+                                  >
+                                    <Link to="/database">
+                                      <RefreshCw className="h-4 w-4 mr-1" />
+                                      Aggiorna dati fornitore
+                                    </Link>
+                                  </Button>
+                                </>
                               )}
                             </div>
                           </TableCell>
@@ -389,6 +454,64 @@ export const OffertaDetail = ({ offerta, onBack, onToggleBlockSupplier }: Offert
               </div>
             )}
           </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Block Dialog */}
+      <Dialog
+        open={blockDialog.open}
+        onOpenChange={(open) => !open && setBlockDialog(prev => ({ ...prev, open: false }))}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Blocca sollecito fornitore</DialogTitle>
+            <DialogDescription>
+              Sei sicuro di voler bloccare il sollecito a questo fornitore?
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex items-center space-x-2 py-4">
+            <Checkbox 
+              id="blockNewRequest" 
+              checked={blockDialog.blockNewRequest}
+              onCheckedChange={(checked) => 
+                setBlockDialog(prev => ({ ...prev, blockNewRequest: checked as boolean }))
+              }
+            />
+            <Label htmlFor="blockNewRequest" className="text-sm">
+              Impedisci una nuova richiesta prodotto per la stessa offerta
+            </Label>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setBlockDialog(prev => ({ ...prev, open: false }))}>
+              NO
+            </Button>
+            <Button onClick={confirmBlockSupplier}>
+              SI
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Unblock Dialog */}
+      <Dialog
+        open={unblockDialog.open}
+        onOpenChange={(open) => !open && setUnblockDialog(prev => ({ ...prev, open: false }))}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Riattiva sollecito fornitore</DialogTitle>
+            <DialogDescription>
+              Sei sicuro di voler riattivare il sollecito per questo fornitore?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setUnblockDialog(prev => ({ ...prev, open: false }))}>
+              NO
+            </Button>
+            <Button onClick={confirmUnblockSupplier}>
+              SI
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>

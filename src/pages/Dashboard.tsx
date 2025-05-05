@@ -2,47 +2,45 @@
 import { useData } from '@/context/DataContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FileText, ShoppingCart, TrendingUp, Users, Clock } from 'lucide-react';
-
-const statusCounts = (quotes: any[], status: string): number => {
-  return quotes.filter(q => q.status === status).length;
-};
+import { mockOfferte } from '@/data/offerte-mock';
 
 const Dashboard = () => {
-  const { quotes, supplierQuotes } = useData();
-  
-  const totalQuotes = quotes.length;
-  const inProgressQuotes = statusCounts(quotes, 'IN_PROGRESS');
-  const confirmedQuotes = statusCounts(quotes, 'CONFIRMED');
-  const pendingSupplierQuotes = supplierQuotes.filter(sq => 
-    sq.status === 'SENT' || sq.status === 'REMINDER_SENT'
-  ).length;
+  const totalOfferte = mockOfferte.length;
+  const inProgressOfferte = mockOfferte.filter(q => q.stato === 'IN_LAVORAZIONE').length;
+  const confirmedOfferte = mockOfferte.filter(q => q.stato === 'CONFERMATA').length;
+  const pendingFornitori = mockOfferte.reduce((acc, offerta) => {
+    const fornitorePending = offerta.fornitori.filter(f => 
+      f.stato === 'INVIATO' || f.stato === 'BLOCCATO'
+    ).length;
+    return acc + fornitorePending;
+  }, 0);
   
   const cards = [
     {
-      title: 'Total Quotes',
-      value: totalQuotes,
-      description: 'All time quote requests',
+      title: 'Offerte Totali',
+      value: totalOfferte,
+      description: 'Tutte le richieste di offerta',
       icon: FileText,
-      color: 'bg-blue-500',
+      color: 'bg-[#172a65]',
     },
     {
-      title: 'In Progress',
-      value: inProgressQuotes,
-      description: 'Quotes being processed',
+      title: 'In Lavorazione',
+      value: inProgressOfferte,
+      description: 'Offerte in fase di elaborazione',
       icon: Clock,
       color: 'bg-amber-500',
     },
     {
-      title: 'Confirmed Orders',
-      value: confirmedQuotes,
-      description: 'Successfully converted quotes',
+      title: 'Ordini Confermati',
+      value: confirmedOfferte,
+      description: 'Offerte convertite con successo',
       icon: ShoppingCart,
       color: 'bg-green-500',
     },
     {
-      title: 'Pending Suppliers',
-      value: pendingSupplierQuotes,
-      description: 'Awaiting supplier responses',
+      title: 'Fornitori in Attesa',
+      value: pendingFornitori,
+      description: 'In attesa di risposta dai fornitori',
       icon: Users,
       color: 'bg-purple-500',
     },
@@ -53,7 +51,7 @@ const Dashboard = () => {
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
         <p className="text-muted-foreground">
-          Overview of your quotation system
+          Panoramica del sistema di gestione offerte
         </p>
       </div>
       
@@ -81,79 +79,82 @@ const Dashboard = () => {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card className="col-span-2">
           <CardHeader>
-            <CardTitle>Recent Quote Requests</CardTitle>
+            <CardTitle>Offerte Recenti</CardTitle>
             <CardDescription>
-              The latest quote requests from customers
+              Le ultime richieste di offerta dai clienti
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {quotes.length > 0 ? (
+            {mockOfferte.length > 0 ? (
               <div className="space-y-4">
-                {quotes.slice(0, 5).map((quote) => (
-                  <div key={quote.id} className="flex items-center justify-between border-b pb-2">
+                {mockOfferte.slice(0, 5).map((offerta) => (
+                  <div key={offerta.id} className="flex items-center justify-between border-b pb-2">
                     <div>
-                      <p className="font-medium">{quote.customerName}</p>
-                      <p className="text-sm text-muted-foreground">Quote: {quote.quoteCode}</p>
+                      <p className="font-medium">{offerta.cliente}</p>
+                      <p className="text-sm text-muted-foreground">Codice: {offerta.codice}</p>
                     </div>
                     <div>
-                      <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                        quote.status === 'CONFIRMED' ? 'bg-green-100 text-green-800' : 
-                        quote.status === 'IN_PROGRESS' ? 'bg-blue-100 text-blue-800' :
-                        quote.status === 'EXPIRED' ? 'bg-red-100 text-red-800' :
-                        'bg-gray-100 text-gray-800'
-                      }`}>
-                        {quote.status.replace('_', ' ')}
-                      </span>
+                      <div className="inline-flex items-center">
+                        <span className="mr-2 text-sm">{offerta.stato === 'CONFERMATA' ? 'Confermata' : 
+                        offerta.stato === 'IN_LAVORAZIONE' ? 'In lavorazione' :
+                        offerta.stato === 'RICEVUTA' ? 'Ricevuta' :
+                        offerta.stato === 'INVIATA' ? 'Inviata' :
+                        offerta.stato === 'SCADUTA' ? 'Scaduta' : offerta.stato}</span>
+                        <span className={`inline-block w-2 h-2 rounded-full ${
+                          offerta.stato === 'CONFERMATA' ? 'bg-green-500' : 
+                          offerta.stato === 'IN_LAVORAZIONE' ? 'bg-gray-500' :
+                          offerta.stato === 'RICEVUTA' ? 'bg-[#172a65]' :
+                          offerta.stato === 'INVIATA' ? 'bg-orange-500' :
+                          'bg-red-500'
+                        }`}></span>
+                      </div>
                     </div>
                   </div>
                 ))}
-                {quotes.length === 0 && (
-                  <p className="text-center text-muted-foreground py-4">No quotes available</p>
-                )}
               </div>
             ) : (
-              <p className="text-center text-muted-foreground py-4">No quotes available</p>
+              <p className="text-center text-muted-foreground py-4">Nessuna offerta disponibile</p>
             )}
           </CardContent>
         </Card>
         
         <Card>
           <CardHeader>
-            <CardTitle>System Status</CardTitle>
+            <CardTitle>Stato del Sistema</CardTitle>
             <CardDescription>
-              Current system performance
+              Attuale performance del sistema
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm">Email Service</span>
+              <span className="text-sm">Servizio Email</span>
               <span className="flex items-center text-sm font-medium text-green-600">
                 <span className="h-2 w-2 rounded-full bg-green-600 mr-1.5"></span>
-                Operational
+                Operativo
               </span>
             </div>
             
             <div className="flex items-center justify-between">
-              <span className="text-sm">Quote Processing</span>
+              <span className="text-sm">Elaborazione Offerte</span>
               <span className="flex items-center text-sm font-medium text-green-600">
                 <span className="h-2 w-2 rounded-full bg-green-600 mr-1.5"></span>
-                Operational
+                Operativo
               </span>
             </div>
             
             <div className="flex items-center justify-between">
-              <span className="text-sm">Supplier Communication</span>
+              <span className="text-sm">Comunicazione Fornitori</span>
               <span className="flex items-center text-sm font-medium text-green-600">
                 <span className="h-2 w-2 rounded-full bg-green-600 mr-1.5"></span>
-                Operational
+                Operativo
               </span>
             </div>
             
             <div className="flex items-center justify-between">
-              <span className="text-sm">Database Backup</span>
+              <span className="text-sm">Backup Database</span>
               <span className="flex items-center text-sm font-medium text-green-600">
                 <span className="h-2 w-2 rounded-full bg-green-600 mr-1.5"></span>
-                Last backup: Today 03:00
+                Ultimo backup: Oggi 03:00
               </span>
             </div>
           </CardContent>

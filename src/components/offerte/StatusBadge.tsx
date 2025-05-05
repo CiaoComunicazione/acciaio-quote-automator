@@ -13,7 +13,7 @@ export const StatusBadge = ({ status, showText = true, size = "md" }: StatusBadg
   const getStatusColor = (status: OfferStatus) => {
     switch (status) {
       case "RICEVUTA":
-        return "text-blue-500";
+        return "text-[#172a65]";
       case "IN_LAVORAZIONE":
         return "text-gray-500";
       case "INVIATA":

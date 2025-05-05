@@ -92,9 +92,9 @@ const SettingsPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">System Settings</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Impostazioni di Sistema</h1>
         <p className="text-muted-foreground">
-          Manage general settings, shipping costs, holidays, and create new users.
+          Gestisci le impostazioni generali, i costi di spedizione, le festività e crea nuovi utenti.
         </p>
       </div>
 
@@ -102,33 +102,33 @@ const SettingsPage = () => {
         <TabsList className="grid w-full grid-cols-4 sm:w-auto">
           <TabsTrigger value="general" className="flex items-center gap-2">
             <SettingsIcon className="h-4 w-4" />
-            <span className="hidden sm:inline">General</span>
+            <span className="hidden sm:inline">Generale</span>
           </TabsTrigger>
           <TabsTrigger value="shipping" className="flex items-center gap-2">
             <Truck className="h-4 w-4" />
-            <span className="hidden sm:inline">Shipping</span>
+            <span className="hidden sm:inline">Spedizioni</span>
           </TabsTrigger>
           <TabsTrigger value="holidays" className="flex items-center gap-2">
             <CalendarIcon className="h-4 w-4" />
-            <span className="hidden sm:inline">Holidays</span>
+            <span className="hidden sm:inline">Festività</span>
           </TabsTrigger>
           <TabsTrigger value="users" className="flex items-center gap-2">
             <UserPlus className="h-4 w-4" />
-            <span className="hidden sm:inline">New User</span>
+            <span className="hidden sm:inline">Nuovo Utente</span>
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="general">
           <Card>
             <CardHeader>
-              <CardTitle>General Settings</CardTitle>
+              <CardTitle>Impostazioni Generali</CardTitle>
               <CardDescription>
-                Configure the general system settings like email sender, markup percentage and quote automation.
+                Configura le impostazioni generali del sistema come indirizzo email, percentuale di ricarico e automazione delle offerte.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email-sender">Email Sender Address</Label>
+                <Label htmlFor="email-sender">Indirizzo Email Mittente</Label>
                 <div className="flex items-center space-x-2">
                   <Mail className="h-4 w-4 text-muted-foreground" />
                   <Input
@@ -141,7 +141,7 @@ const SettingsPage = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="markup">Markup Percentage</Label>
+                <Label htmlFor="markup">Percentuale di Ricarico</Label>
                 <div className="flex items-center space-x-2">
                   <Input
                     id="markup"
@@ -161,24 +161,24 @@ const SettingsPage = () => {
                   checked={automaticQuotes}
                   onCheckedChange={setAutomaticQuotes}
                 />
-                <Label htmlFor="automatic-quotes">Automatic Quote Sending</Label>
+                <Label htmlFor="automatic-quotes">Invio Automatico Offerte</Label>
               </div>
             </CardContent>
             <CardFooter>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button>Save Changes</Button>
+                  <Button>Salva Modifiche</Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Confirm Changes</AlertDialogTitle>
+                    <AlertDialogTitle>Conferma Modifiche</AlertDialogTitle>
                     <AlertDialogDescription>
-                      Are you sure you want to confirm the changes to general settings?
+                      Sei sicuro di voler confermare le modifiche alle impostazioni generali?
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel>No</AlertDialogCancel>
-                    <AlertDialogAction>Yes</AlertDialogAction>
+                    <AlertDialogAction>Si</AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
@@ -189,9 +189,9 @@ const SettingsPage = () => {
         <TabsContent value="shipping">
           <Card>
             <CardHeader>
-              <CardTitle>Shipping Settings</CardTitle>
+              <CardTitle>Impostazioni Spedizione</CardTitle>
               <CardDescription>
-                Configure shipping costs based on pallet ranges and free shipping threshold.
+                Configura i costi di spedizione in base alle fasce di pallet e soglia per la spedizione gratuita.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -201,12 +201,12 @@ const SettingsPage = () => {
                   checked={freeShippingEnabled}
                   onCheckedChange={setFreeShippingEnabled}
                 />
-                <Label htmlFor="free-shipping">Enable Free Shipping</Label>
+                <Label htmlFor="free-shipping">Abilita Spedizione Gratuita</Label>
               </div>
 
               {freeShippingEnabled && (
                 <div className="space-y-2 mb-4">
-                  <Label htmlFor="free-shipping-threshold">Free Shipping Threshold (Pallets)</Label>
+                  <Label htmlFor="free-shipping-threshold">Soglia Spedizione Gratuita (Pallet)</Label>
                   <Input
                     id="free-shipping-threshold"
                     value={freeShippingThreshold}
@@ -220,14 +220,14 @@ const SettingsPage = () => {
 
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <h3 className="text-sm font-medium">Shipping Cost Ranges</h3>
+                  <h3 className="text-sm font-medium">Fasce Costo Spedizione</h3>
                   <Button 
                     variant="outline" 
                     size="sm" 
                     className="flex items-center gap-1"
                     onClick={addShippingRange}
                   >
-                    <Plus className="h-4 w-4" /> Add Range
+                    <Plus className="h-4 w-4" /> Aggiungi Fascia
                   </Button>
                 </div>
 
@@ -236,7 +236,7 @@ const SettingsPage = () => {
                     <div key={range.id} className="flex items-center gap-2 p-3 border rounded-md">
                       <div className="flex-1 grid grid-cols-3 gap-2">
                         <div>
-                          <Label htmlFor={`min-pallets-${range.id}`}>Min Pallets</Label>
+                          <Label htmlFor={`min-pallets-${range.id}`}>Pallet Min</Label>
                           <Input
                             id={`min-pallets-${range.id}`}
                             value={range.minPallets}
@@ -251,7 +251,7 @@ const SettingsPage = () => {
                           />
                         </div>
                         <div>
-                          <Label htmlFor={`max-pallets-${range.id}`}>Max Pallets</Label>
+                          <Label htmlFor={`max-pallets-${range.id}`}>Pallet Max</Label>
                           <Input
                             id={`max-pallets-${range.id}`}
                             value={range.maxPallets}
@@ -266,7 +266,7 @@ const SettingsPage = () => {
                           />
                         </div>
                         <div>
-                          <Label htmlFor={`cost-${range.id}`}>Cost (€)</Label>
+                          <Label htmlFor={`cost-${range.id}`}>Costo (€)</Label>
                           <Input
                             id={`cost-${range.id}`}
                             value={range.cost}
@@ -298,18 +298,18 @@ const SettingsPage = () => {
             <CardFooter>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button>Save Changes</Button>
+                  <Button>Salva Modifiche</Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Confirm Changes</AlertDialogTitle>
+                    <AlertDialogTitle>Conferma Modifiche</AlertDialogTitle>
                     <AlertDialogDescription>
-                      Are you sure you want to confirm the changes to shipping settings?
+                      Sei sicuro di voler confermare le modifiche alle impostazioni di spedizione?
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel>No</AlertDialogCancel>
-                    <AlertDialogAction>Yes</AlertDialogAction>
+                    <AlertDialogAction>Si</AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
@@ -320,15 +320,15 @@ const SettingsPage = () => {
         <TabsContent value="holidays">
           <Card>
             <CardHeader>
-              <CardTitle>Custom Holidays</CardTitle>
+              <CardTitle>Festività Personalizzate</CardTitle>
               <CardDescription>
-                Set custom holidays when the company is closed and no quotes will be processed.
+                Imposta le festività personalizzate quando l'azienda è chiusa e non verranno elaborate le offerte.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-4 md:grid md:grid-cols-2 md:gap-8 md:space-y-0">
                 <div className="border rounded-md p-4">
-                  <h3 className="font-medium mb-2">Select Dates</h3>
+                  <h3 className="font-medium mb-2">Seleziona Date</h3>
                   <Calendar
                     mode="multiple"
                     selected={selectedDates}
@@ -338,11 +338,11 @@ const SettingsPage = () => {
                 </div>
 
                 <div>
-                  <h3 className="font-medium mb-2">Selected Holidays</h3>
+                  <h3 className="font-medium mb-2">Festività Selezionate</h3>
                   <Textarea 
                     readOnly 
                     value={getSelectedHolidays()} 
-                    placeholder="No custom holidays selected"
+                    placeholder="Nessuna festività personalizzata selezionata"
                     className="min-h-[200px]"
                   />
                 </div>
@@ -351,18 +351,18 @@ const SettingsPage = () => {
             <CardFooter>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button>Save Changes</Button>
+                  <Button>Salva Modifiche</Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Confirm Changes</AlertDialogTitle>
+                    <AlertDialogTitle>Conferma Modifiche</AlertDialogTitle>
                     <AlertDialogDescription>
-                      Are you sure you want to confirm the changes to holiday settings?
+                      Sei sicuro di voler confermare le modifiche alle impostazioni delle festività?
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel>No</AlertDialogCancel>
-                    <AlertDialogAction>Yes</AlertDialogAction>
+                    <AlertDialogAction>Si</AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
@@ -373,15 +373,15 @@ const SettingsPage = () => {
         <TabsContent value="users">
           <Card>
             <CardHeader>
-              <CardTitle>Create New User</CardTitle>
+              <CardTitle>Crea Nuovo Utente</CardTitle>
               <CardDescription>
-                Add a new user to the system with specific permissions.
+                Aggiungi un nuovo utente al sistema con permessi specifici.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="new-user-name">First Name</Label>
+                  <Label htmlFor="new-user-name">Nome</Label>
                   <Input
                     id="new-user-name"
                     value={newUser.name}
@@ -390,7 +390,7 @@ const SettingsPage = () => {
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="new-user-surname">Last Name</Label>
+                  <Label htmlFor="new-user-surname">Cognome</Label>
                   <Input
                     id="new-user-surname"
                     value={newUser.surname}
@@ -399,7 +399,7 @@ const SettingsPage = () => {
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="new-user-username">Username</Label>
+                  <Label htmlFor="new-user-username">Nome Utente</Label>
                   <Input
                     id="new-user-username"
                     value={newUser.username}
@@ -418,7 +418,7 @@ const SettingsPage = () => {
                 </div>
                 
                 <div className="space-y-2">
-                  <Label>Role</Label>
+                  <Label>Ruolo</Label>
                   <div className="flex space-x-4">
                     <div className="flex items-center">
                       <input
@@ -442,7 +442,7 @@ const SettingsPage = () => {
                         onChange={() => updateNewUser('role', 'ADMINISTRATOR')}
                         className="mr-2"
                       />
-                      <Label htmlFor="role-admin">Administrator</Label>
+                      <Label htmlFor="role-admin">Amministratore</Label>
                     </div>
                   </div>
                 </div>
@@ -451,18 +451,18 @@ const SettingsPage = () => {
             <CardFooter>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button>Create User</Button>
+                  <Button>Crea Utente</Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Confirm User Creation</AlertDialogTitle>
+                    <AlertDialogTitle>Conferma Creazione Utente</AlertDialogTitle>
                     <AlertDialogDescription>
-                      Are you sure you want to create a new user with these privileges?
+                      Sei sicuro di voler creare un nuovo utente con questi privilegi?
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel>No</AlertDialogCancel>
-                    <AlertDialogAction>Yes</AlertDialogAction>
+                    <AlertDialogAction>Si</AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
@@ -475,3 +475,4 @@ const SettingsPage = () => {
 };
 
 export default SettingsPage;
+

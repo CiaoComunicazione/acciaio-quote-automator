@@ -9,7 +9,11 @@ const Navbar = () => {
   return (
     <header className="h-16 border-b bg-white flex items-center justify-between px-6 shadow-sm">
       <div>
-        <h1 className="text-xl font-medium text-steel-900">Acciaio Quote Automator</h1>
+        <img 
+          src="/lovable-uploads/d58c95cd-b4b8-4b6f-a27f-3b280c1b4e07.png" 
+          alt="Acciaio Logo" 
+          className="h-10" 
+        />
       </div>
       
       <div className="flex items-center space-x-4">
