@@ -10,7 +10,7 @@ const Navbar = () => {
     <header className="h-16 border-b bg-white flex items-center justify-between px-6 shadow-sm">
       <div>
         <img 
-          src="/lovable-uploads/d58c95cd-b4b8-4b6f-a27f-3b280c1b4e07.png" 
+          src="/lovable-uploads/a5ca00f9-f4d8-43c8-afd2-6fdac643075c.png" 
           alt="Acciaio Logo" 
           className="h-10" 
         />
@@ -28,10 +28,10 @@ const Navbar = () => {
               {user?.name} {user?.surname}
             </span>
             <span className="text-xs text-muted-foreground">
-              {user?.role}
+              {user?.role === 'ADMINISTRATOR' ? 'Amministratore' : 'Junior'}
             </span>
           </div>
-          <Button variant="ghost" size="icon" onClick={logout}>
+          <Button variant="ghost" size="icon" onClick={logout} title="Esci">
             <LogOut size={20} />
           </Button>
         </div>

@@ -65,17 +65,17 @@ const DatabasePage = () => {
   ];
 
   const logs = [
-    { id: '1', timestamp: '2025-05-04 09:15:23', username: 'mario.rossi', action: 'Login', details: 'Successful login' },
-    { id: '2', timestamp: '2025-05-04 09:30:45', username: 'mario.rossi', action: 'Quote Created', details: 'Created quote #040525-01' },
-    { id: '3', timestamp: '2025-05-04 10:05:12', username: 'luigi.bianchi', action: 'Supplier Quote Sent', details: 'Sent to Acciaio Italia S.p.A.' },
+    { id: '1', timestamp: '2025-05-04 09:15:23', username: 'mario.rossi', action: 'Login', details: 'Accesso riuscito' },
+    { id: '2', timestamp: '2025-05-04 09:30:45', username: 'mario.rossi', action: 'Preventivo Creato', details: 'Creato preventivo #040525-01' },
+    { id: '3', timestamp: '2025-05-04 10:05:12', username: 'luigi.bianchi', action: 'Preventivo Inviato', details: 'Inviato a Acciaio Italia S.p.A.' },
   ];
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Database Management</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Gestione Database</h1>
         <p className="text-muted-foreground">
-          View and modify suppliers, products, customers, users and system logs.
+          Visualizza e modifica fornitori, prodotti, clienti, utenti e log di sistema.
         </p>
       </div>
 
@@ -83,55 +83,69 @@ const DatabasePage = () => {
         <TabsList className="grid grid-cols-5 gap-2 w-full sm:w-auto">
           <TabsTrigger value="suppliers" className="flex items-center gap-2">
             <Database className="h-4 w-4" />
-            <span className="hidden sm:inline">Suppliers</span>
+            <span className="hidden sm:inline">Fornitori</span>
           </TabsTrigger>
           <TabsTrigger value="products" className="flex items-center gap-2">
             <Package className="h-4 w-4" />
-            <span className="hidden sm:inline">Products</span>
+            <span className="hidden sm:inline">Prodotti</span>
           </TabsTrigger>
           <TabsTrigger value="customers" className="flex items-center gap-2">
             <UserCircle className="h-4 w-4" />
-            <span className="hidden sm:inline">Customers</span>
+            <span className="hidden sm:inline">Clienti</span>
           </TabsTrigger>
           <TabsTrigger value="users" className="flex items-center gap-2">
             <Users className="h-4 w-4" />
-            <span className="hidden sm:inline">Users</span>
+            <span className="hidden sm:inline">Utenti</span>
           </TabsTrigger>
           <TabsTrigger value="logs" className="flex items-center gap-2">
             <ClipboardList className="h-4 w-4" />
-            <span className="hidden sm:inline">Logs</span>
+            <span className="hidden sm:inline">Log</span>
           </TabsTrigger>
         </TabsList>
 
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle>{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Management</CardTitle>
+              <CardTitle>
+                {activeTab === "suppliers" && "Gestione Fornitori"}
+                {activeTab === "products" && "Gestione Prodotti"}
+                {activeTab === "customers" && "Gestione Clienti"}
+                {activeTab === "users" && "Gestione Utenti"}
+                {activeTab === "logs" && "Log di Sistema"}
+              </CardTitle>
               <div className="flex items-center gap-2">
                 {activeTab !== "logs" && (
                   <Button size="sm">
-                    Add New {activeTab.slice(0, -1).charAt(0).toUpperCase() + activeTab.slice(0, -1).slice(1)}
+                    {activeTab === "suppliers" && "Aggiungi Fornitore"}
+                    {activeTab === "products" && "Aggiungi Prodotto"}
+                    {activeTab === "customers" && "Aggiungi Cliente"}
+                    {activeTab === "users" && "Aggiungi Utente"}
                   </Button>
                 )}
                 <Button variant="outline" size="sm">
-                  Export CSV
+                  Esporta CSV
                 </Button>
               </div>
             </div>
           </CardHeader>
           <CardContent>
             <div className="mb-4">
-              <Input placeholder={`Search ${activeTab}...`} className="max-w-sm" />
+              <Input placeholder={`Cerca ${
+                activeTab === "suppliers" ? "fornitori" : 
+                activeTab === "products" ? "prodotti" :
+                activeTab === "customers" ? "clienti" :
+                activeTab === "users" ? "utenti" : "log"
+              }...`} className="max-w-sm" />
             </div>
 
             <TabsContent value="suppliers" className="m-0">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Code</TableHead>
-                    <TableHead>Company Name</TableHead>
+                    <TableHead>Codice</TableHead>
+                    <TableHead>Azienda</TableHead>
                     <TableHead>Email</TableHead>
-                    <TableHead>Actions</TableHead>
+                    <TableHead>Azioni</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -144,18 +158,18 @@ const DatabasePage = () => {
                         <div className="flex gap-2">
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
-                              <Button variant="outline" size="sm">Edit</Button>
+                              <Button variant="outline" size="sm">Modifica</Button>
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                               <AlertDialogHeader>
-                                <AlertDialogTitle>Confirm Changes</AlertDialogTitle>
+                                <AlertDialogTitle>Conferma Modifiche</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  Are you sure you want to confirm the changes for this supplier?
+                                  Sei sicuro di voler confermare le modifiche a questo fornitore?
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
                                 <AlertDialogCancel>No</AlertDialogCancel>
-                                <AlertDialogAction>Yes</AlertDialogAction>
+                                <AlertDialogAction>Sì</AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
                           </AlertDialog>
@@ -167,14 +181,14 @@ const DatabasePage = () => {
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                               <AlertDialogHeader>
-                                <AlertDialogTitle>Confirm Deletion</AlertDialogTitle>
+                                <AlertDialogTitle>Conferma Eliminazione</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  Are you sure you want to delete this supplier? This action cannot be undone.
+                                  Sei sicuro di voler eliminare questo fornitore? Questa azione non può essere annullata.
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
                                 <AlertDialogCancel>No</AlertDialogCancel>
-                                <AlertDialogAction>Yes, Delete</AlertDialogAction>
+                                <AlertDialogAction>Sì, Elimina</AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
                           </AlertDialog>
@@ -190,10 +204,10 @@ const DatabasePage = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Code</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Details</TableHead>
-                    <TableHead>Actions</TableHead>
+                    <TableHead>Codice</TableHead>
+                    <TableHead>Nome</TableHead>
+                    <TableHead>Dettagli</TableHead>
+                    <TableHead>Azioni</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -206,18 +220,18 @@ const DatabasePage = () => {
                         <div className="flex gap-2">
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
-                              <Button variant="outline" size="sm">Edit</Button>
+                              <Button variant="outline" size="sm">Modifica</Button>
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                               <AlertDialogHeader>
-                                <AlertDialogTitle>Confirm Changes</AlertDialogTitle>
+                                <AlertDialogTitle>Conferma Modifiche</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  Are you sure you want to confirm the changes for this product?
+                                  Sei sicuro di voler confermare le modifiche a questo prodotto?
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
                                 <AlertDialogCancel>No</AlertDialogCancel>
-                                <AlertDialogAction>Yes</AlertDialogAction>
+                                <AlertDialogAction>Sì</AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
                           </AlertDialog>
@@ -229,14 +243,14 @@ const DatabasePage = () => {
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                               <AlertDialogHeader>
-                                <AlertDialogTitle>Confirm Deletion</AlertDialogTitle>
+                                <AlertDialogTitle>Conferma Eliminazione</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  Are you sure you want to delete this product? This action cannot be undone.
+                                  Sei sicuro di voler eliminare questo prodotto? Questa azione non può essere annullata.
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
                                 <AlertDialogCancel>No</AlertDialogCancel>
-                                <AlertDialogAction>Yes, Delete</AlertDialogAction>
+                                <AlertDialogAction>Sì, Elimina</AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
                           </AlertDialog>
@@ -252,11 +266,11 @@ const DatabasePage = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Code</TableHead>
-                    <TableHead>Name</TableHead>
+                    <TableHead>Codice</TableHead>
+                    <TableHead>Nome</TableHead>
                     <TableHead>Email</TableHead>
-                    <TableHead>Address</TableHead>
-                    <TableHead>Actions</TableHead>
+                    <TableHead>Indirizzo</TableHead>
+                    <TableHead>Azioni</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -270,18 +284,18 @@ const DatabasePage = () => {
                         <div className="flex gap-2">
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
-                              <Button variant="outline" size="sm">Edit</Button>
+                              <Button variant="outline" size="sm">Modifica</Button>
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                               <AlertDialogHeader>
-                                <AlertDialogTitle>Confirm Changes</AlertDialogTitle>
+                                <AlertDialogTitle>Conferma Modifiche</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  Are you sure you want to confirm the changes for this customer?
+                                  Sei sicuro di voler confermare le modifiche a questo cliente?
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
                                 <AlertDialogCancel>No</AlertDialogCancel>
-                                <AlertDialogAction>Yes</AlertDialogAction>
+                                <AlertDialogAction>Sì</AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
                           </AlertDialog>
@@ -293,14 +307,14 @@ const DatabasePage = () => {
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                               <AlertDialogHeader>
-                                <AlertDialogTitle>Confirm Deletion</AlertDialogTitle>
+                                <AlertDialogTitle>Conferma Eliminazione</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  Are you sure you want to delete this customer? This action cannot be undone.
+                                  Sei sicuro di voler eliminare questo cliente? Questa azione non può essere annullata.
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
                                 <AlertDialogCancel>No</AlertDialogCancel>
-                                <AlertDialogAction>Yes, Delete</AlertDialogAction>
+                                <AlertDialogAction>Sì, Elimina</AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
                           </AlertDialog>
@@ -317,10 +331,10 @@ const DatabasePage = () => {
                 <TableHeader>
                   <TableRow>
                     <TableHead>Username</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Surname</TableHead>
-                    <TableHead>Role</TableHead>
-                    <TableHead>Actions</TableHead>
+                    <TableHead>Nome</TableHead>
+                    <TableHead>Cognome</TableHead>
+                    <TableHead>Ruolo</TableHead>
+                    <TableHead>Azioni</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -333,25 +347,25 @@ const DatabasePage = () => {
                         <span className={`px-2 py-1 rounded-full text-xs ${
                           user.role === 'ADMINISTRATOR' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-800'
                         }`}>
-                          {user.role}
+                          {user.role === 'ADMINISTRATOR' ? 'Amministratore' : 'Junior'}
                         </span>
                       </TableCell>
                       <TableCell>
                         <div className="flex gap-2">
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
-                              <Button variant="outline" size="sm">Edit</Button>
+                              <Button variant="outline" size="sm">Modifica</Button>
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                               <AlertDialogHeader>
-                                <AlertDialogTitle>Confirm Changes</AlertDialogTitle>
+                                <AlertDialogTitle>Conferma Modifiche</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  Are you sure you want to confirm the changes for this user?
+                                  Sei sicuro di voler confermare le modifiche a questo utente?
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
                                 <AlertDialogCancel>No</AlertDialogCancel>
-                                <AlertDialogAction>Yes</AlertDialogAction>
+                                <AlertDialogAction>Sì</AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
                           </AlertDialog>
@@ -363,14 +377,14 @@ const DatabasePage = () => {
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                               <AlertDialogHeader>
-                                <AlertDialogTitle>Confirm Deletion</AlertDialogTitle>
+                                <AlertDialogTitle>Conferma Eliminazione</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  Are you sure you want to delete this user? This action cannot be undone.
+                                  Sei sicuro di voler eliminare questo utente? Questa azione non può essere annullata.
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
                                 <AlertDialogCancel>No</AlertDialogCancel>
-                                <AlertDialogAction>Yes, Delete</AlertDialogAction>
+                                <AlertDialogAction>Sì, Elimina</AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
                           </AlertDialog>
@@ -386,10 +400,10 @@ const DatabasePage = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Timestamp</TableHead>
+                    <TableHead>Data e Ora</TableHead>
                     <TableHead>Username</TableHead>
-                    <TableHead>Action</TableHead>
-                    <TableHead>Details</TableHead>
+                    <TableHead>Azione</TableHead>
+                    <TableHead>Dettagli</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>

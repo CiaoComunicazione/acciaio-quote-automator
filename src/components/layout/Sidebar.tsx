@@ -18,7 +18,7 @@ const Sidebar = () => {
 
   const adminNavigation = [
     { name: 'Database', href: '/database', icon: Database, admin: true },
-    { name: 'Settings', href: '/settings', icon: Settings, admin: true },
+    { name: 'Impostazioni', href: '/settings', icon: Settings, admin: true },
   ];
 
   // Filter navigation based on user role
@@ -36,11 +36,12 @@ const Sidebar = () => {
   return (
     <div className="min-h-screen w-64 bg-steel-900 text-white flex flex-col">
       <div className="p-6">
-        <div className="flex items-center space-x-2">
-          <div className="h-8 w-8 bg-white rounded-sm flex items-center justify-center">
-            <span className="text-steel-900 font-bold text-lg">A</span>
-          </div>
-          <span className="font-semibold text-xl">Acciaio</span>
+        <div className="flex items-center">
+          <img 
+            src="/lovable-uploads/a5ca00f9-f4d8-43c8-afd2-6fdac643075c.png" 
+            alt="Acciaio Logo" 
+            className="h-10" 
+          />
         </div>
       </div>
       
@@ -66,7 +67,7 @@ const Sidebar = () => {
             <>
               <div className="pt-5">
                 <div className="px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                  Administration
+                  Amministrazione
                 </div>
                 {filteredAdminNavigation.map((item) => (
                   <Link
