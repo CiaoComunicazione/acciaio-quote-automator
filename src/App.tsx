@@ -16,6 +16,7 @@ import Unauthorized from "@/pages/Unauthorized";
 import NotFound from "@/pages/NotFound";
 import Database from "@/pages/Database";
 import Settings from "@/pages/Settings";
+import Offerte from "@/pages/Offerte";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,11 @@ const App = () => (
                 <Route path="/" element={
                   <ProtectedRoute>
                     <Dashboard />
+                  </ProtectedRoute>
+                } />
+                <Route path="/offerte" element={
+                  <ProtectedRoute>
+                    <Offerte />
                   </ProtectedRoute>
                 } />
                 <Route path="/database" element={

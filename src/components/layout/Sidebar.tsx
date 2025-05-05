@@ -2,8 +2,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { 
-  Mail, FileText, Database, Settings, ClipboardList, BarChart3,
-  User // Added User import from Lucide
+  Database, Settings, BarChart3, FileText,
+  User
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
@@ -13,9 +13,7 @@ const Sidebar = () => {
   
   const navigation = [
     { name: 'Dashboard', href: '/', icon: BarChart3 },
-    { name: 'Quote Requests', href: '/quotes', icon: FileText },
-    { name: 'Supplier Quotes', href: '/supplier-quotes', icon: ClipboardList },
-    { name: 'Email Inbox', href: '/inbox', icon: Mail },
+    { name: 'Offerte', href: '/offerte', icon: FileText },
   ];
 
   const adminNavigation = [
