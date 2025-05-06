@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { 
   Database, Settings, BarChart3, FileText,
-  User
+  User, BookOpen
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
@@ -14,6 +14,7 @@ const Sidebar = () => {
   const navigation = [
     { name: 'Dashboard', href: '/', icon: BarChart3 },
     { name: 'Offerte', href: '/offerte', icon: FileText },
+    { name: 'Documentazione', href: '/documentazione', icon: BookOpen },
   ];
 
   const adminNavigation = [
@@ -100,7 +101,7 @@ const Sidebar = () => {
               {user?.name} {user?.surname}
             </p>
             <p className="text-xs text-gray-300">
-              {user?.role}
+              {user?.role === 'ADMINISTRATOR' ? 'Amministratore' : 'Junior'}
             </p>
           </div>
         </div>
