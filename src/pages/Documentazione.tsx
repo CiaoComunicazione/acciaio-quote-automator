@@ -725,7 +725,7 @@ const Documentazione = () => {
                   </p>
                   <ol className="list-decimal pl-6 space-y-2">
                     <li>
-                      <strong>Tramite la sezione Impostazioni > Nuovo Utente</strong>
+                      <strong>Tramite la sezione Impostazioni {'->'} Nuovo Utente</strong>
                       <p className="mt-1">
                         Questa è la modalità consigliata per creare rapidamente un nuovo utente, specificando:
                       </p>
@@ -737,7 +737,7 @@ const Documentazione = () => {
                       </ul>
                     </li>
                     <li>
-                      <strong>Tramite la sezione Database > Utenti</strong>
+                      <strong>Tramite la sezione Database {'->'} Utenti</strong>
                       <p className="mt-1">
                         Questa modalità permette una gestione più completa degli utenti esistenti, con funzionalità per:
                       </p>
@@ -911,3 +911,4 @@ const Documentazione = () => {
 };
 
 export default Documentazione;
+
