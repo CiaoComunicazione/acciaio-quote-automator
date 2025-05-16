@@ -17,6 +17,7 @@ import NotFound from "@/pages/NotFound";
 import Database from "@/pages/Database";
 import Settings from "@/pages/Settings";
 import Offerte from "@/pages/Offerte";
+import Documentazione from "@/pages/Documentazione";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +51,11 @@ const App = () => (
                 <Route path="/settings" element={
                   <ProtectedRoute>
                     <Settings />
+                  </ProtectedRoute>
+                } />
+                <Route path="/documentazione" element={
+                  <ProtectedRoute>
+                    <Documentazione />
                   </ProtectedRoute>
                 } />
                 <Route path="*" element={<NotFound />} />
